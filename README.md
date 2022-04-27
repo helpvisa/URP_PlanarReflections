@@ -11,6 +11,6 @@ Includes sample materials + textures.
 More documentation to come; for the time being, the examples cover a variety of uses (i.e. mirrors being pure metallic and unaffected by fresnel, non-metallic surfaces reflecting objects in place of a cubemap).
 The reflections are calculated across the Y plane; this means all models / planes you put the reflections on should be FACING TOWARD Y, otherwise your results will not be correct. See the default plane in Unity as an example.
 
-For best results, make sure your default environment map is set to blank in your lighting options (solid colour, black, no skybox reflection) and make sure to disable reflection probes on the mesh you assign this material to.
+For best results, make sure your default environmental reflection is set to "Custom" -> "No Cubemap" in your lighting options and make sure to disable reflection probes on the mesh you assign this material to.
 
 Follows standard material texture convention for Unity (Smoothness Stored in Alpha of Metalness texture). No AO texture support yet but should be trivial to implement.
