@@ -13,4 +13,7 @@ The reflections are calculated across the Y plane; this means all models / plane
 
 For best results, make sure your default environmental reflection is set to "Custom" -> "No Cubemap" in your lighting options and make sure to disable reflection probes on the mesh you assign this material to.
 
+The script needs a prefab camera and a "player" camera to reference; the prefab camera is what the reflection camera is created from, and the player camera is the reference camera that the script uses to properly reflect the new camera.
+In most cases, you can simply drag the main camera from your scene into both slots in the script.
+
 Follows standard material texture convention for Unity (Smoothness Stored in Alpha of Metalness texture). No AO texture support yet but should be trivial to implement.
