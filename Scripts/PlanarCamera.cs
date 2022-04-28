@@ -7,7 +7,7 @@ public class PlanarCamera : MonoBehaviour
 {
     void Start()
     {
-        // subscribe to the render pipeline updates, used for disabled fog in reflections as it causes visual bugs
+        // subscribe to render pipeline camera updates, used for disabling fog in reflections as it causes visual bugs
         RenderPipelineManager.beginCameraRendering += OnBeginCameraRendering;
         RenderPipelineManager.endCameraRendering += OnEndCameraRendering;
         
@@ -74,7 +74,7 @@ public class PlanarCamera : MonoBehaviour
             GetComponent<MeshRenderer>().sharedMaterial.SetFloat("Resolution", resolutionMultiplier);
         }
 
-        // initialize a plane based on the water plane
+        // initialize a plane to reflect across, based on the assigned object's position and direction
         reflectionPlane = new Plane(-transform.forward, transform.position);
         
         ReflectPlanarCamera();
@@ -87,7 +87,7 @@ public class PlanarCamera : MonoBehaviour
 
     void Update()
     {
-        // check if resolution has changed and swap texture accordingly
+        // check if resolution has changed and swap texture accordingly (if screen is resized, aspect ratio changed, etc)
         if (Screen.height != screenHeightLastFrame || Screen.width != screenWidthLastFrame)
             ChangeRenderTextureRes(resolutionMultiplier);
         
@@ -98,7 +98,6 @@ public class PlanarCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        // update the texture in case the window is being resized or the resolution changed
         // done in late update so reflection is not delayed on next frame
         
         // re-intialize the plane in case it is moving
@@ -115,12 +114,14 @@ public class PlanarCamera : MonoBehaviour
     // disable fog for this camera
     void OnBeginCameraRendering(ScriptableRenderContext context, Camera renderCamera)
     {
-        if (renderCamera == planarCamera){
+        if (renderCamera == planarCamera)
+        {
             oldFogState = RenderSettings.fog;
             RenderSettings.fog = false;
         }
     }
 
+    // re-enable fog for main camera (or otherwise restore old fog settings)
     void OnEndCameraRendering(ScriptableRenderContext context, Camera renderCamera)
     {
         RenderSettings.fog = oldFogState;
@@ -135,7 +136,8 @@ public class PlanarCamera : MonoBehaviour
 
     // functions
     // determine the new position of the reflection camera based on a reflection across the water plane
-    void ReflectPlanarCamera(){
+    void ReflectPlanarCamera()
+    {
         Vector3 cameraDirectionWorldSpace = playerCamera.transform.forward;
         Vector3 cameraUpWorldSpace = playerCamera.transform.up;
         Vector3 cameraPositionWorldSpace = playerCamera.transform.position;
@@ -237,8 +239,10 @@ public class PlanarCamera : MonoBehaviour
     int screenWidthLastFrame = 0;
     int screenHeightLastFrame = 0;
 
-    // distances and positions
+    // distances and positions (unused)
+    /*
     float distanceToWater;
     Vector3 planarCameraPosition = new Vector3(0,0,0);
     Vector3 planarCameraLook;
+    */
 }
