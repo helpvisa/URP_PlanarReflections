@@ -1,5 +1,5 @@
--- Unity URP Planar Reflections
--- Dan Brackenbury
+# Unity URP Planar Reflections
+## Dan Brackenbury
 
 A way to implement planar reflections in the Universal Render Pipeline for Unity, created using Shader Graph.
 Probably works in HDRP too if you re-target, but that's wholly unnecessary.
